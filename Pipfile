@@ -1,0 +1,3 @@
+[packages]
+setuptools = "*"
+jfly = {path = "./jfly-package"}
