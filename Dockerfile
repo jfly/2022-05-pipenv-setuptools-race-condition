@@ -8,9 +8,6 @@ RUN apt-get update && \
         python3 \
         python3-pip
 
-# Upgrading setuptools before pipenv tries to makes the race go away.
-# RUN pip install --upgrade setuptools==61.2.0
-
 # Just install some recent version of pip.
 RUN pip install --upgrade pip==22.0.4
 
