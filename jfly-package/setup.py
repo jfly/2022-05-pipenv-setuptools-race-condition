@@ -12,7 +12,6 @@ try:
     setuptools.setup(
         name='jfly',
         version='0.42.0',
-        install_requires=['six>=1.7.2'],
         packages=[
             'jfly',
         ],
