@@ -15,14 +15,15 @@ reset() {
     # apt-get install --reinstall python3-setuptools python3-pkg-resources python3-distutils
 
     # But, this is more likely to make sense to Python folks who don't want to think about apt.
-    pip install setuptools==45.2.0 &>/dev/null
+    pip install "setuptools==45.2.0" &>/dev/null
+
+    #<<< # Carefully chosen setuptools version to agree with Pipfile.lock.
+    #<<< # This won't have any issues.
+    #<<< PIPFILE_LOCK_SETUPTOOLS=$(jq -r .default.setuptools.version Pipfile.lock)
+    #<<< pip install "setuptools $PIPFILE_LOCK_SETUPTOOLS" &>/dev/null
 }
 
 reset
-
-#<<< trying to repro inside a virtualenv
-#<<< pip install -U wheel
-#<<<
 
 rm -f /tmp/jfly-setup.log
 pipenv install --system --deploy --verbose

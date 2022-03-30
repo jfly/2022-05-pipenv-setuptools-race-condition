@@ -4,6 +4,7 @@ WORKDIR /app
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
+        jq \
         python3 \
         python3-pip
 
@@ -16,8 +17,6 @@ RUN pip install --upgrade pip==22.0.4
 # The behavior doesn't seem to change between recent versions of pipenv.
 # RUN pip install --upgrade pipenv==2022.1.8
 RUN pip install --upgrade pipenv==2022.3.28
-
-RUN apt-get install -y vim #<<<
 
 COPY jfly-package ./jfly-package
 COPY Pipfile .
