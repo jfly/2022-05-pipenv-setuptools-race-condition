@@ -2,8 +2,14 @@
 
 set -euo pipefail
 
+if [ $# -gt 0 ] && [ "$1" = "--verbose" ]; then
+    export JFLY_VERBOSE="1"
+else
+    export JFLY_VERBOSE=""
+fi
+
 reset() {
-    echo "Restting..."
+    echo "Resetting..."
 
     # Uninstall jfly and go back to an old version of setuptools (old enough
     # that pipenv will decide to upgrade it because there's a newer version in
@@ -26,10 +32,14 @@ reset() {
 reset
 
 rm -f /tmp/jfly-setup.log
-pipenv install --system --deploy --verbose
-echo "------------ START OF /tmp/jfly-setup.log ------------------------"
-cat /tmp/jfly-setup.log
-echo "------------ END OF /tmp/jfly-setup.log ------------------------"
+if [ -n "$JFLY_VERBOSE" ]; then
+    pipenv install --system --deploy --verbose
+    echo "------------ START OF /tmp/jfly-setup.log ------------------------"
+    cat /tmp/jfly-setup.log
+    echo "------------ END OF /tmp/jfly-setup.log ------------------------"
+else
+    echo "Installing deps with pipenv..."
+    pipenv install --system --deploy &> /dev/null
+fi
 
-python3 -c "import jfly.BadMath as j; print(j)"
-echo "success!"
+python3 -c "import jfly.BadMath as j; print(f'Successfully imported jfly.BadMath! {j}')"
